@@ -1,0 +1,57 @@
+import pandas as pd 
+import numpy as np 
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+df=pd.read_csv("diabetes.csv")
+df
+
+
+df.shape
+
+
+df.describe()
+
+
+df.head()
+
+
+df.info()
+
+
+x=df.drop("Outcome", axis= 1)
+x
+
+
+y=df["Outcome"]
+y 
+
+
+from sklearn.preprocessing import MinMaxScaler
+scaler= MinMaxScaler()
+x_scale= scaler.fit_transform(x)
+x_scale
+
+
+sns.countplot(x=y)
+
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test= train_test_split(x_scale,y, train_size=0.70, random_state=70)
+from sklearn.neighbors import KNeighborsClassifier
+knn= KNeighborsClassifier()
+
+
+knn.fit(x_train,y_train)
+
+
+y_pred= knn.predict(x_test)
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, classification_report
+accuracy_score(y_test, y_pred)
+
+
+ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
+
+
+print(classification_report(y_test, y_pred))

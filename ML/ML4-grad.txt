@@ -1,0 +1,23 @@
+x= 2
+lr= 0.001
+max_iter= 100000
+iter= 0
+precision= 0.000001
+previous_step_size= 1
+gf= lambda x: (x+3)**2
+
+
+gf1= []
+while precision < previous_step_size and iter < max_iter :
+    prv= x
+    x= x-(lr * gf(prv))
+    previous_step_size= abs(x-prv)
+    iter +=1
+    print("iteration :", iter, "value :", x )
+    gf1.append(x)
+
+
+import matplotlib.pyplot as plt
+plt.plot(gf1)
+
+

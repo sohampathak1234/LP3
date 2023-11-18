@@ -1,0 +1,66 @@
+import pandas as pd
+import numpy as np
+import matplotlib as plt
+import seaborn as sns
+
+
+df = pd.read_csv("Churn_Modelling.csv")
+df
+
+
+df.head()
+
+
+df.describe()
+
+
+df.columns
+
+
+x=df.drop(['RowNumber','CustomerId','Geography','Surname','Gender','Exited'],axis=1)
+x
+
+
+y=df['Exited']
+y
+
+
+sns.countplot(x = y)
+
+
+y.value_counts
+
+
+from sklearn.preprocessing import StandardScaler
+scalar = StandardScaler()
+x_scale = scalar.fit_transform (x)
+x_scale
+
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x_scale, y, random_state= 70, train_size=0.70)
+x_train.shape
+
+
+x_test.shape
+
+
+y_train.shape
+
+
+y_test.shape
+
+
+from sklearn.neural_network import MLPClassifier
+ann = MLPClassifier(hidden_layer_sizes=(100,100,100),random_state=70,activation='relu')
+ann.fit(x_train,y_train)
+
+
+y_pred = ann.predict(x_test)
+y_pred
+
+
+from sklearn.metrics import ConfusionMatrixDisplay,accuracy_score,classification_report
+ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
+
+
