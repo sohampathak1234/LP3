@@ -1,0 +1,78 @@
+package Practicals;
+
+import java.util.Arrays;
+import java.util.Random;
+
+public class QuickSortAnalysis {
+
+    public static void main(String[] args) {
+        int[] array = generateRandomArray(10000); // Adjust the array size as needed
+
+        // Deterministic QuickSort
+        long startTime = System.nanoTime();
+        quickSort(array.clone(), 0, array.length - 1);
+        long endTime = System.nanoTime();
+        System.out.println("Deterministic QuickSort took: " + (endTime - startTime) + " nanoseconds");
+
+        // Randomized QuickSort
+        startTime = System.nanoTime();
+        randomizedQuickSort(array.clone(), 0, array.length - 1);
+        endTime = System.nanoTime();
+        System.out.println("Randomized QuickSort took: " + (endTime - startTime) + " nanoseconds");
+    }
+
+    // Deterministic QuickSort
+    public static void quickSort(int[] array, int low, int high) {
+        if (low < high) {
+            int partitionIndex = partition(array, low, high);
+
+            quickSort(array, low, partitionIndex - 1);
+            quickSort(array, partitionIndex + 1, high);
+        }
+    }
+
+    // Randomized QuickSort
+    public static void randomizedQuickSort(int[] array, int low, int high) {
+        if (low < high) {
+            int randomIndex = low + new Random().nextInt(high - low + 1);
+            swap(array, randomIndex, high);
+
+            int partitionIndex = partition(array, low, high);
+
+            randomizedQuickSort(array, low, partitionIndex - 1);
+            randomizedQuickSort(array, partitionIndex + 1, high);
+        }
+    }
+
+    private static int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (array[j] <= pivot) {
+                i++;
+                swap(array, i, j);
+            }
+        }
+
+        swap(array, i + 1, high);
+        return i + 1;
+    }
+
+    private static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    private static int[] generateRandomArray(int size) {
+        int[] array = new int[size];
+        Random random = new Random();
+
+        for (int i = 0; i < size; i++) {
+            array[i] = random.nextInt(1000); // Adjust the upper limit as needed
+        }
+
+        return array;
+    }
+}

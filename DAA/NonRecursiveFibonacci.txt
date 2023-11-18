@@ -1,0 +1,27 @@
+package Practicals;
+
+public class NonRecursiveFibonacci {
+
+    public static void main(String[] args) {
+        int n = 10; // Change this value to generate Fibonacci series up to a different number
+
+        System.out.println("Fibonacci Series up to " + n + " terms:");
+        printFibonacciSeries(n);
+    }
+
+    public static void printFibonacciSeries(int n) {
+        int firstTerm = 0;
+        int secondTerm = 1;
+
+        System.out.print(firstTerm + " " + secondTerm + " ");
+
+        for (int i = 2; i < n; i++) {
+            int nextTerm = firstTerm + secondTerm;
+            System.out.print(nextTerm + " ");
+
+            // Update first and second terms for the next iteration
+            firstTerm = secondTerm;
+            secondTerm = nextTerm;
+        }
+    }
+}
